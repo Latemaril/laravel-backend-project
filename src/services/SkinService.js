@@ -38,6 +38,15 @@ class SkinService {
       }
       return skin;
    }
+
+   async updateSkinName(userId, skinId, newName) {
+      const skin = await SkinRepository.findByIdAndUserId(skinId, userId);
+      if (!skin) {
+         throw new Error('Skin not found');
+      }
+      skin.name = newName;
+      return await SkinRepository.update(skin);
+   }
 }
 
 module.exports = new SkinService();

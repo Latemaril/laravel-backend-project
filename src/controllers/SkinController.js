@@ -67,6 +67,17 @@ class SkinController {
          res.status(404).json({ error: error.message });
       }
    }
+
+   static async updateSkinName(req, res) {
+      try {
+         const { userId, skinId } = req.params;
+         const { name } = req.body;
+         const updatedSkin = await SkinService.updateSkinName(userId, skinId, name);
+         res.status(200).json(updatedSkin);
+      } catch (error) {
+         res.status(400).json({ error: error.message });
+      }
+   }
 }
 
 module.exports = SkinController;

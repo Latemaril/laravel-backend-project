@@ -219,4 +219,55 @@ router.get('/user/:userId', SkinController.getSkinsByUser);
  */
 router.get('/user/:userId/skin/:skinId', SkinController.getSkinByIdAndUser);
 
+/**
+ * @swagger
+ * /api/skins/user/{userId}/skin/{skinId}:
+ *   put:
+ *     summary: Update a skin's name
+ *     tags: [Skins]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: User ID
+ *       - in: path
+ *         name: skinId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Skin ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Skin updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 userId:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Skin not found
+ */
+router.put('/user/:userId/skin/:skinId', SkinController.updateSkinName);
+
 module.exports = router;
