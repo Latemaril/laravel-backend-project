@@ -38,7 +38,7 @@ clean-architecture-app/
 ├── .env
 ├── package.json
 └── nodemon.json
-
+```
 
 # Описание директорий
 
