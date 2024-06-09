@@ -26,8 +26,6 @@ clean-architecture-app/
 │   ├── services/
 │   │   ├── UserService.js
 │   │   └── SkinService.js
-│   ├── use_cases/
-│   ├── utils/
 │   └── app.js
 ├── config/
 │   └── config.json
