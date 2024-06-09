@@ -1,69 +1,43 @@
-const Skin = require('../models/Skin');
-const SharedSkin = require('../models/SharedSkin');
+const SkinRepository = require('../repositories/SkinRepository');
+const SharedSkinRepository = require('../repositories/SharedSkinRepository');
 
 class SkinService {
-   static async createSkin({ userId, name }) {
-      const skin = await Skin.create({ userId, name });
-      return skin;
+   async createSkin({ userId, name }) {
+      return await SkinRepository.create({ userId, name });
    }
 
-   static async publishSkin(skinId) {
-      const skin = await Skin.findByPk(skinId);
+   async publishSkin(skinId) {
+      const skin = await SkinRepository.findById(skinId);
       if (!skin) {
          throw new Error('Skin not found');
       }
       skin.isPublished = true;
-      await skin.save();
-      return skin;
+      return await SkinRepository.update(skin);
    }
 
-   static async getPublishedSkins() {
-      const skins = await Skin.findAll({
-         where: { isPublished: true },
-         attributes: ['id', 'userId', 'name']
-      });
-      return skins;
+   async getPublishedSkins() {
+      return await SkinRepository.findAllPublished();
    }
 
-   static async shareSkinWithUser(skinId, userId) {
-      await SharedSkin.create({ skinId, userId });
+   async shareSkinWithUser(skinId, userId) {
+      return await SharedSkinRepository.create({ skinId, userId });
    }
 
-   static async getSharedSkinsForUser(userId) {
-      const sharedSkins = await SharedSkin.findAll({
-         where: { userId },
-         include: {
-            model: Skin,
-            attributes: ['id', 'userId', 'name']
-         }
-      });
-
-      return sharedSkins.map(sharedSkin => sharedSkin.Skin);
+   async getSharedSkinsForUser(userId) {
+      return await SharedSkinRepository.findAllByUserId(userId);
    }
 
-   static async getSkinsByUser(userId) {
-      const skins = await Skin.findAll({
-         where: { userId },
-         attributes: ['id', 'userId', 'name']
-      });
-      return skins;
+   async getSkinsByUser(userId) {
+      return await SkinRepository.findByUserId(userId);
    }
 
-   static async getSkinByIdAndUser(userId, skinId) {
-      const skin = await Skin.findOne({
-         where: {
-            userId,
-            id: skinId
-         },
-         attributes: ['id', 'userId', 'name']
-      });
-
+   async getSkinByIdAndUser(userId, skinId) {
+      const skin = await SkinRepository.findByIdAndUserId(skinId, userId);
       if (!skin) {
          throw new Error('Skin not found');
       }
-
       return skin;
    }
 }
 
-module.exports = SkinService;
+module.exports = new SkinService();
