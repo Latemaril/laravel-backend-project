@@ -26,8 +26,8 @@ class SkinRepository {
    async findByIdAndUserId(skinId, userId) {
       return await Skin.findOne({
          where: {
-            id: skinId,
-            userId: userId
+            userId,
+            id: skinId
          },
          attributes: ['id', 'userId', 'name']
       });
@@ -35,6 +35,14 @@ class SkinRepository {
 
    async update(skin) {
       return await skin.save();
+   }
+
+   async delete(skinId) {
+      return await Skin.destroy({
+         where: {
+            id: skinId
+         }
+      });
    }
 }
 

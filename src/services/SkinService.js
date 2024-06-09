@@ -47,6 +47,14 @@ class SkinService {
       skin.name = newName;
       return await SkinRepository.update(skin);
    }
+
+   async deleteSkin(userId, skinId) {
+      const skin = await SkinRepository.findByIdAndUserId(skinId, userId);
+      if (!skin) {
+         throw new Error('Skin not found');
+      }
+      return await SkinRepository.delete(skinId);
+   }
 }
 
 module.exports = new SkinService();

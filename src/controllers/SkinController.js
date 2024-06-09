@@ -78,6 +78,16 @@ class SkinController {
          res.status(400).json({ error: error.message });
       }
    }
+
+   static async deleteSkin(req, res) {
+      try {
+         const { userId, skinId } = req.params;
+         await SkinService.deleteSkin(userId, skinId);
+         res.status(200).json({ message: 'Skin deleted successfully' });
+      } catch (error) {
+         res.status(400).json({ error: error.message });
+      }
+   }
 }
 
 module.exports = SkinController;

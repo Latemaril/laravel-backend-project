@@ -270,4 +270,40 @@ router.get('/user/:userId/skin/:skinId', SkinController.getSkinByIdAndUser);
  */
 router.put('/user/:userId/skin/:skinId', SkinController.updateSkinName);
 
+/**
+ * @swagger
+ * /api/skins/user/{userId}/skin/{skinId}:
+ *   delete:
+ *     summary: Delete a skin by user ID and skin ID
+ *     tags: [Skins]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: User ID
+ *       - in: path
+ *         name: skinId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Skin ID
+ *     responses:
+ *       200:
+ *         description: Skin deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Skin not found
+ */
+router.delete('/user/:userId/skin/:skinId', SkinController.deleteSkin);
+
 module.exports = router;
